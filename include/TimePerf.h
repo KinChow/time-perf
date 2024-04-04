@@ -11,7 +11,6 @@
 #include <string>
 #include <chrono>
 #include <iostream>
-#include "config.h"
 
 #ifndef TIME_PERF_ON
 #define TIME_PERF_ON 0

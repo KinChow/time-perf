@@ -5,14 +5,6 @@ set(RELEASE_VERSION "ReleaseMode")
 set(COMPILE_MODE ${DEBUG_VERSION})
 set(PROJECT_NAME "TimePerf")
 
-if (NOT DEFINED MASTER_PROJECT)
-    set(MASTER_PROJECT OFF)
-    if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
-        set(MASTER_PROJECT ON)
-    endif()
-    message(STATUS "${PROJECT_NAME}: MASTER_PROJECT: ${MASTER_PROJECT}")
-endif()
-
 # debug mode (project name + compile time)
 if(${COMPILE_MODE} MATCHES ${DEBUG_VERSION})
     set(USE_RELEASE_MODE 0)
@@ -41,16 +33,10 @@ if (ENABLE_TIME_PERF)
 add_definitions(-DTIME_PERF_ON=1)
 endif()
 
-configure_file(
-    "${PROJECT_SOURCE_DIR}/include/config.h.in"
-    "${PROJECT_BINARY_DIR}/config.h"
-)
-
 include_directories(
-    ${PROJECT_SOURCE_DIR}/include
-    ${PROJECT_BINARY_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
 )
 
-if (ENABLE_EXAMPLE)
-add_subdirectory(examples)
+if ((CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR) AND ENABLE_EXAMPLE)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/examples)
 endif()
